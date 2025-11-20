@@ -64,11 +64,11 @@ spec:
       description: Skip checks against built image
       name: skip-checks
       type: string
-    - default: "false"
+    - default: "true"
       description: Execute the build with network isolation
       name: hermetic
       type: string
-    - default: ""
+    - default: "cargo"
       description: Build dependencies to be prefetched
       name: prefetch-input
       type: string
@@ -167,6 +167,8 @@ spec:
       params:
       - name: input
         value: $(params.prefetch-input)
+      - name: mode
+        value: strict
       - name: SOURCE_ARTIFACT
         value: $(tasks.clone-repository.results.SOURCE_ARTIFACT)
       - name: ociStorage
@@ -180,7 +182,7 @@ spec:
         - name: name
           value: prefetch-dependencies-oci-ta
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-prefetch-dependencies-oci-ta:0.2@sha256:9dbb38efdfca525b00dc502acf44723ac4a6c413bb2ab97459a13cd3a6056f17
+          value: quay.io/rh-ee-msoltis/tekton-catalog/task-prefetch-dependencies:0.3
         - name: kind
           value: task
         resolver: bundles
