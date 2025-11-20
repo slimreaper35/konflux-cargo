@@ -64,11 +64,11 @@ spec:
       description: Skip checks against built image
       name: skip-checks
       type: string
-    - default: "false"
+    - default: "true"
       description: Execute the build with network isolation
       name: hermetic
       type: string
-    - default: ""
+    - default: "cargo"
       description: Build dependencies to be prefetched
       name: prefetch-input
       type: string
@@ -165,6 +165,8 @@ spec:
       params:
       - name: input
         value: $(params.prefetch-input)
+      - name: mode
+        value: permissive
       runAfter:
       - clone-repository
       taskRef:
@@ -172,7 +174,7 @@ spec:
         - name: name
           value: prefetch-dependencies
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-prefetch-dependencies:0.2@sha256:b4ae3e150bbe0a0a8a24e4ac7c8cb99a01f022c36a679264304220db6812a821
+          value: quay.io/rh-ee-msoltis/tekton-catalog/task-prefetch-dependencies:0.3
         - name: kind
           value: task
         resolver: bundles
